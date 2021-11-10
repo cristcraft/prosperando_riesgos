@@ -1,6 +1,6 @@
 <?php 
     require_once("./connection/connection.php");
-    require_once("./tables/tables.php");
+    require_once("./tables.php");
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +16,7 @@
     <h1>lista dependiente</h1>
     <select name="departamentos" id="departamentos">
         <?php while($row = $canal_de_servicioResult -> fetch_assoc()){ ?>
-            <option value="<? $row['canal_de_servicio'] ?>"><? $row['canal_de_servicio'] ?></option>
+            <option value="<?php echo $row['id'] ?>"><?php echo $row['canal_de_servicio'] ?></option>
         <?php }?>
     </select>
 
