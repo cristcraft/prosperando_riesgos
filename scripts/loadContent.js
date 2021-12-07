@@ -3,10 +3,11 @@ let listasDependientes = document.querySelector('#listasDependientes');
 let subListasDependientes = document.querySelector('#subListasDependientes');
 let text = document.querySelector('#textarea')
 
+
 /*Para la automatizacion de la carga de elementos se creo una lista con varios objetos dentro, los cuales
 cuentan con una estructura definida que se enviara a travez del ajax por POST a loadContent */
 let datosTabla = [
-    /*
+    /* document.querySelector('#nombre_del_riesgo')
         {
             "nombreTabla" : el nombre de la tabla a la cual se hace referencia
             dependiente: true si alguna lista depende de esta misma ej: el resultado de producto_servicio_afectado
@@ -55,7 +56,7 @@ function loadContent(){
         console.log(datosTabla[i].dato)
         $.ajax({
                     type: "POST",
-                    url: "loadContent.php",
+                    url: "components/loadContent.php",
                     /*Data es como se envian los datos por medio de POST al php, se maneja igual que una ur
                     ej: index.php?selects=nombre */
                     data: `selects=${datosTabla[i].dato}&lista_dependiente=${datosTabla[i].dependiente}&titulo=${datosTabla[i].titulo}`,
@@ -66,6 +67,7 @@ function loadContent(){
                             /*El timeout es utilizado para retrazar la carga de los elementos lo cual 
                             ayuda a que se cargue de forma ordenada */
                             form.innerHTML += ordenSelects[i]
+                            
                         }, 100);
                     }
                 })
@@ -76,7 +78,7 @@ function loadContent(){
         /*Este for es el encargado de renderizar los textareas */
         $.ajax({
             type:"POST",
-            url:"textareas.php",
+            url:"components/textareas.php",
             data: `titulo=${textareas[i]}`,
             success:function(response){
                 ordenTextarea.push(response)
@@ -95,37 +97,73 @@ setTimeout(() => {
     let f = document.querySelector('#producto_servicio_afectado')
     console.log(f)
     $('#proceso_afectado').change(function(){
-        consult('producto_servicio_afectado', 'Producto/servicio afectado', 'proceso_afectado');
+        consult('producto_servicio_afectado', 'Producto/servicio afectado', 'id_nombre_del_riesgo', 'proceso_afectado');
     });
 
     
 
-    function consult(selects, titulo, lista){
+    function consult(selects, titulo, listaDependiente, lista){
         $.ajax({
             type: "POST",
-            url: "consulta.php",
-            data: `selects=${selects}&titulo=${titulo}&lista=${lista}&id=` + $(`#${lista}`).val(),
+            url: "components/listasDependientes.php",
+            data: `selects=${selects}&titulo=${titulo}&listaDependiente=${listaDependiente}&lista=${lista}&id=` + $(`#${lista}`).val(),
             success:function(response){
                 $('#listasDependientes').html(response);
-
                 $('#producto_servicio_afectado').change(function(){
                     console.log('sublitst')
-                    subListConsult('nombre_del_riesgo', 'Nombre del riesgo', 'producto_servicio_afectado' );
+                    subListConsult('nombre_del_riesgo', 'Nombre del riesgo', 'referencia', 'producto_servicio_afectado' );
                 });
             }
         })
     }
 
-    function subListConsult(selects, titulo, lista){
+
+    function subListConsult(selects, titulo, listaDependiente, lista){
         $.ajax({
             type: "POST",
-            url: "consulta.php",
-            data: `selects=${selects}&titulo=${titulo}&lista=${lista}&id=` + $(`#${lista}`).val(),
+            url: "components/consultaNombreDelRiesgo.php",
+            data: `selects=${selects}&titulo=${titulo}&listaDependiente=${listaDependiente}&lista=${lista}&id=` + $(`#${lista}`).val(),
             success:function(response){
                 $('#subListasDependientes').html(response);
+                //Rellenar el numero de la referencia escuchando el cambio de la sublista del nombre del riesgo
+                setTimeout(() => {
+                    $('#nombre_del_riesgo').change(function(){
+                        consultarReferencia('nombre_del_riesgo');
+                        mostrarCausa('causa', 'Causa', 'nombre_del_riesgo' )
+                    });
+                }, 100);
             }
         })
     }
+    
+
+    //Rellenar el numero de la referencia escuchando el cambio de la sublista del nombre del riesgo
+    function consultarReferencia(lista){
+        $.ajax({
+            type: "POST",
+            url: "components/consultarReferencia.php",
+            data: `referencia=`+ $(`#${lista}`).val(),
+            success:function(response){
+                console.log('ref')
+                let ref = document.querySelector('#ref')
+                ref.innerHTML = response
+                
+            }
+        })
+    }
+
+    function mostrarCausa(selects, titulo, lista){
+        $.ajax({
+            type: "POST",
+            url: "components/consultarCausa.php",
+            data: `selects=${selects}&titulo=${titulo}&id_causa=` + $(`#${lista}`).val(),
+            success:function(response){
+                $('#causa').html(response);
+            }
+        })
+    }
+
+
 }, 300);
 
 

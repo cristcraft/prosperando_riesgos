@@ -14,12 +14,18 @@
     <title>Lista dependiente</title>
 </head>
 <body>
-    <h1>lista dependiente</h1>
+    <h1>lista dependiente Prueba</h1>
     <div class="root" id="root">
-        <form action="" method="post" id="form_principal"></form>
+        <form action="" method="post" id="form_principal">
+            <div id="div_proceso_afectado"></div>
+        </form>
         <hr>
         <div class="listasDependientes" id="listasDependientes"></div>
-        <div class="subListasDependientes" id="subListasDependientes"></div>
+        <div class="subListasDependientes" id="subListasDependientes">
+            <div id="nombre_del_riesgo"></div>
+        </div>
+        <div id="ref"></div>
+        <div id="causa"></div>
         <hr>
         <div class="textarea" id="textarea"></div>
     </div>

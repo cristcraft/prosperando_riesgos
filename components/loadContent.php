@@ -1,6 +1,5 @@
 <?php 
-    require_once("./connection/connection.php");
-    require_once("./tables.php");
+    require_once("../connection/connection.php");
 
     $selects = $_POST['selects'];
     $titulo = $_POST['titulo'];
