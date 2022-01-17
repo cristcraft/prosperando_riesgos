@@ -56,9 +56,32 @@ $result = mysqli_query($connection, $consultaSql);
             <div class="referencia mb-3 ">
                 <label for="referencia" class="form-label">Referencia</label>
             </div>
+
+            <div class="clase_riesgo_operativo mb-3 d-none">
+                <label for="clase_riesgo_operativo" class="form-label">clase_riesgo_operativo</label>
+                <select name="clase_riesgo_operativo" id="clase_riesgo_operativo" class="form-select mb-3"
+                    aria-label="Default select example">
+                    <option value="0">Seleccione una opcion</option>
+                </select>
+            </div>
+
+            <div class="causa mb-3 d-none">
+                <label for="causa" class="form-label">causa</label>
+                <select name="causa" id="causa" class="form-select mb-3"
+                    aria-label="Default select example">
+                    <option value="0">Seleccione una opcion</option>
+                </select>
+            </div>
+
+            <div class="control mb-3 d-none">
+                <label for="control" class="form-label">control</label>
+                <select name="control" id="control" class="form-select mb-3"
+                    aria-label="Default select example">
+                    <option value="0">Seleccione una opcion</option>
+                </select>
+            </div>
         </form>
     </div>
-
 
     <div class="res" id="res"></div>
 

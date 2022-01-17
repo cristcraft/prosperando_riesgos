@@ -1,5 +1,10 @@
 let datos;
 
+
+document.addEventListener('DOMContentLoaded', ()=>{
+    
+})
+
 $('#proceso_afectado').change(function(){
     consult('proceso_afectado', 'producto_servicio_afectado');
 });
@@ -10,6 +15,12 @@ $('#producto_servicio_afectado').change(function(){
 
 $('#nombre_riesgo').change(function(){
     consult('nombre_riesgo', 'referencia');
+    consult('nombre_riesgo', 'causa');
+    consult('nombre_riesgo', 'clase_riesgo_operativo');
+});
+
+$('#causa').change(function(){
+    consult('causa', 'control');
 });
 
 function consult(tabla_principal, tabla_dependiente){
